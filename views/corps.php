@@ -15,7 +15,7 @@
   </head>
   <body>
     <?php
-    require('views/navbar.php');
+    include('views/navbar.php');
     require('views/content.php');
     ?>
     </body>

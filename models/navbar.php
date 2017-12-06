@@ -1,6 +1,6 @@
 <?php
 
-if (empty($_SESSION['nom']) && empty($_SESSION['prenom'])){
+if (empty($_SESSION['prenom'])){
   echo('
     <ul class="navbar-nav mr-right">
       <!--li class="nav-item">
@@ -15,7 +15,7 @@ if (empty($_SESSION['nom']) && empty($_SESSION['prenom'])){
   </nav>
     ');
 }else{
-  echo("<a href='?page=disconnect' class='btn btn-primary'>Déconnexion</a></div>
+  echo("<a href='?page=deconnexion' class='btn btn-primary'>Déconnexion</a></div>
   </div>
 </nav>");
 }

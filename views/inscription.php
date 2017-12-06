@@ -25,4 +25,3 @@
                 <button type="submit" class="btn btn-primary pull-right" name="valider">Envoyer</button>
   </div>
 </div>
-</div>

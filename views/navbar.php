@@ -49,7 +49,7 @@
       </div>
       <div class="modal-body">
         <form class="form-signin" action="index.php?" method="GET">
-          <input type="hidden" name="page" value="verif_connexion">
+          <input type="hidden" name="page" value="connexion">
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Adresse email" required autofocus>
         <label for="inputPassword"  class="sr-only" >Password</label>

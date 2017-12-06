@@ -4,8 +4,7 @@ function verif_inscription ($email, $pass, $repass ,$key) {
 
 	if (empty($email) || empty($pass) || empty($repass)) {
 		echo '<br><div class="alert alert-danger" role="alert">Veuillez remplir tout les champs</div>';
-		include('./views/inscription.phtml');
-
+		include('./views/inscription.php');
 	} else {
 		$bdd = connexion_bdd();
 		$req1 = $bdd->query('SELECT email, password FROM user');
@@ -18,24 +17,19 @@ function verif_inscription ($email, $pass, $repass ,$key) {
 					'mail' => $email
 			));
 				$req->closeCursor();
-				$redirection = header('Location: ../index.php');
-				return redirection;
+				 echo "<h3>Votre mot de passe a été modifier avec succès</h3>";
 			} else {
-				$flag = true;
+				echo '<br><div class="alert alert-danger" role="alert">Mail ou Mot de passe incorrect</div>';
+				include('./views/inscription.php');
 			}
 		}
-			if($flag == true) {
-				echo '<br><div class="alert alert-danger" role="alert">Mail ou Mot de passe incorrect</div>';
-				include('./views/inscription.phtml');
-			}
-
 		$req1->closeCursor();
 	}
 }
 
 function connect_user($email,$pass){
-$bdd = connexion_bdd();
-$reponse = $bdd->query('SELECT * FROM user');
+	$bdd = connexion_bdd();
+	$reponse = $bdd->query('SELECT * FROM user');
 
   while ($donnees = $reponse->fetch())
   {
@@ -49,7 +43,7 @@ $reponse = $bdd->query('SELECT * FROM user');
 
 		$result=true;
 		break;
-    }else{
+    } else {
 		$result=false;
 		}
 
