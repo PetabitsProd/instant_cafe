@@ -15,7 +15,7 @@ if (empty($_SESSION['prenom'])){
   </nav>
     ');
 }else{
-  echo("<a href='?page=deconnexion' class='btn btn-primary'>Déconnexion</a></div>
+  echo("<a href='./controllers/deconnexion.php' class='btn btn-primary'>Déconnexion</a></div>
   </div>
 </nav>");
 }

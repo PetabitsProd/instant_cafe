@@ -28,23 +28,21 @@ function verif_inscription ($email, $pass, $repass ,$key) {
 }
 
 function connect_user($email,$pass){
+	require('config.php');
 	$bdd = connexion_bdd();
 	$reponse = $bdd->query('SELECT * FROM user');
 
   while ($donnees = $reponse->fetch())
   {
-
-    //modif BDD table user pass varchar(32)to(255)
     if($donnees['email'] == $email && $pass == $donnees['password']){
-    $_SESSION['nom'] = $donnees['nom'];
-    $_SESSION['prenom'] = $donnees['prenom'];
-    $_SESSION['solde'] = $donnees['solde'];
-		$_SESSION['type'] = $donnees['type'];
-
-		$result=true;
+	    $_SESSION['nom'] = $donnees['nom'];
+	    $_SESSION['prenom'] = $donnees['prenom'];
+	    $_SESSION['solde'] = $donnees['solde'];
+			$_SESSION['type'] = $donnees['type'];
+			$result = true;
 		break;
     } else {
-		$result=false;
+			$result = false;
 		}
 
   }

@@ -1,4 +1,6 @@
 <?php
+session_start();
 session_destroy();
-header('Location: .');
+print_r($_SESSION);
+header('Location: http://instantcafe:8888');
 ?>
