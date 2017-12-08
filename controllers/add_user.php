@@ -44,6 +44,6 @@ foreach ($user as $value) {
   require('send_mail.php');
   send_mail();
 
-  header("Location: http://instantcafe:8888/index.php?page=accueil");
+  header("Location: ../index.php?page=accueil");
 
 ?>

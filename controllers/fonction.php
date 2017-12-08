@@ -1,5 +1,6 @@
 <?php
 
+// FONCTION POUR VÉRIFIER UNE INSCRIPTION
 function verif_inscription ($email, $pass, $repass ,$key) {
 
 	if (empty($email) || empty($pass) || empty($repass)) {
@@ -27,6 +28,7 @@ function verif_inscription ($email, $pass, $repass ,$key) {
 	}
 }
 
+// FONCTION POUR CONNECTER UN UTLISISATEUR
 function connect_user($email,$pass){
 	require('config.php');
 	$bdd = connexion_bdd();

@@ -33,7 +33,7 @@
 
     </ul>
     <?php
-    require('./controllers/navbar.php');
+    require('./models/navbar.php');
     ?>
 
 
@@ -50,9 +50,9 @@
       <div class="modal-body">
         <form class="form-signin" action="./controllers/connexion.php?" method="GET">
           <!--input type="hidden" name="page" value="connexion"-->
-        <label for="inputEmail" class="sr-only">Email address</label><br>
+        <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Adresse email" required autofocus>
-        <label for="inputPassword"  class="sr-only" >Password</label>
+        <br><label for="inputPassword"  class="sr-only" >Password</label>
         <input type="password" id="inputPassword" name="pass" class="form-control" placeholder="Mot de passe" required>
         <br>
         <button class="btn btn-lg btn-primary btn-block" name="submit" value"submit" type="submit">Connexion</button>
