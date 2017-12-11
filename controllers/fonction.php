@@ -51,4 +51,37 @@ function connect_user($email,$pass){
   $reponse->closeCursor(); // Termine le traitement de la requête
 	return($result);
 }
+
+function creer_groupe($nom, $iduser) {
+	require('config.php');
+	$bdd = connexion_bdd();
+	$req = $bdd->prepare('INSERT INTO pfh (nom,solde) VALUES(:nom, :solde)');
+	$req->execute(array(
+		'nom' => $nom,
+		'solde' => 0,
+		));
+	$req->closeCursor();
+
+	$req = $bdd->query('SELECT ID_pfh, nom FROM pfh');
+	while ($result = $req->fetch()) {
+		if ($nom == $result['nom']) {
+			$idpfh = $result['ID_pfh'];
+			$req1 = $bdd->query('SELECT ID_user FROM user');
+			while ($result2 = $req1->fetch()) {
+				if ($iduser == $result2['ID_user']) {
+					$req2 = $bdd->prepare('UPDATE user SET ID_pfh = :idpfh WHERE ID_user = :iduser');
+					$req2->execute(array(
+						'iduser' => $iduser,
+						'idpfh' => $idpfh, 
+					));
+				}
+			}
+			$req2->closeCursor();
+		}
+	}
+	$req1->closeCursor();
+	$req->closeCursor();
+}
+
+
 ?>
