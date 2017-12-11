@@ -3,13 +3,10 @@
       <nav class="navbar navbar-light bg-light">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Active</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <form class="" action="./controllers/supprimer_profil.php" method="post">
+                <?php include('./models/list_pfh.php'); ?>
+            </form>
+
           </li>
           <li class="nav-item">
             <a href="../index.php?page=creer_groupe" class="btn btn-primary">Créer groupe</a>

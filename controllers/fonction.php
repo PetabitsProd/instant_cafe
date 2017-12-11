@@ -72,7 +72,7 @@ function creer_groupe($nom, $iduser) {
 					$req2 = $bdd->prepare('UPDATE user SET ID_pfh = :idpfh WHERE ID_user = :iduser');
 					$req2->execute(array(
 						'iduser' => $iduser,
-						'idpfh' => $idpfh, 
+						'idpfh' => $idpfh,
 					));
 				}
 			}
@@ -83,5 +83,21 @@ function creer_groupe($nom, $iduser) {
 	$req->closeCursor();
 }
 
+function supprimer_profil($nom) {
+	require('config.php');
+	$bdd = connexion_bdd();
+	$req = $bdd->query('SELECT nom FROM pfh');
+	while ($result = $req->fetch()) {
+		if($nom == $result["nom"]) {
+			echo "J'ai détecté le PFH<br>";
+			$req1 = $bdd->prepare('DELETE FROM pfh WHERE nom = :nom');
+			$req1->execute(array(
+				'nom' => $nom
+			));
+		}
+	}
+	$req->closeCursor();
+	$req1->closeCursor();
+}
 
 ?>
