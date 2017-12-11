@@ -1,5 +1,6 @@
 <div class="container">
   <?php
-    require('./models/accueil_membre.php');
-   ?>
+  echo("Bonjour ".$_SESSION['prenom']);
+  echo ("<br>Votre solde est de : ".$_SESSION['solde']."€");
+  ?>
 </div>
