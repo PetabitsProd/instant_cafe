@@ -21,6 +21,7 @@ if (empty($_SESSION['prenom'])){
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">Mon compte</a>
+              <a class="dropdown-item" href="?page=changer_mdp">Changer MDP</a>
             <div class="dropdown-divider"></div>
               <a href="./controllers/deconnexion.php" class="dropdown-item">Déconnexion</a>
             </div>
