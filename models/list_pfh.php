@@ -8,7 +8,7 @@
 				// echo '</form>';
 				// echo '<br>';
 			echo '<li class="nav-item">';
-			echo '<input type="submit" name="profil" value="'.$nom.'"class="nav-link" href="./controllers/">'/*.$nom.'</a>'*/;
+			echo '<a class="nav-link" href="./controllers/supprimer_profil.php?profil='.$nom.'">'.$nom.'</a>';
 			echo '</li>';
 	}
 	$req->closeCursor();

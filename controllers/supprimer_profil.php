@@ -1,7 +1,7 @@
 <?php
-$nom = $_POST["profil"];
+$nom = $_GET["profil"];
+echo $nom;
 require('fonction.php');
 supprimer_profil($nom);
-echo "PFH supprimé";
 //header('Location: ../index.php?page=admin');
 ?>

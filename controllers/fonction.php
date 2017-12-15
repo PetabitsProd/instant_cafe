@@ -118,18 +118,19 @@ function creer_groupe($nom, $iduser) {
 function supprimer_profil($nom) {
 	require('config.php');
 	$bdd = connexion_bdd();
-	$req = $bdd->query('SELECT nom FROM pfh');
-	while ($result = $req->fetch()) {
-		if($nom == $result["nom"]) {
-			echo "J'ai détecté le PFH<br>";
-			$req1 = $bdd->prepare('DELETE FROM pfh WHERE nom = :nom');
-			$req1->execute(array(
-				'nom' => $nom
-			));
-		}
-	}
-	$req->closeCursor();
-	$req1->closeCursor();
+	$req_recup = $bdd->query('SELECT nom FROM pfh WHERE nom = '.$nom);
+	$req_sup = $bdd->exec('DELETE FROM pfh WHERE nom = '.$nom) or die(print_r($bdd->errorInfo(), true));
+	// $req = $bdd->query('SELECT nom FROM pfh WHERE ');
+	// while ($result = $req->fetch()) {
+	// 	if($nom == $result["nom"]) {
+	// 		$req1 = $bdd->prepare('DELETE FROM pfh WHERE nom = :nom');
+	// 		$req1->execute(array(
+	// 			'nom' => $nom
+	// 		));
+	// 	}
+	// }
+	// $req->closeCursor();
+	// $req1->closeCursor();
 }
 
 ?>

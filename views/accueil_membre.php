@@ -1,6 +1,5 @@
 <div class="container">
   <?php
-  echo("Bonjour ".$_SESSION['prenom']);
-  echo ("<br>Votre solde est de : ".$_SESSION['solde']."€");
+  echo("<h1>Bonjour ".$_SESSION['prenom']."</h1>");
   ?>
 </div>
