@@ -2,8 +2,7 @@
   <div class="form-area">
     <br style="clear:both">
     <h3 style="margin-bottom: 25px; text-align: center;">Changer le mot de passe</h3>
-              <form action="index.php?" method="GET">
-                <input type="hidden" name="page" value="verif_mdp">
+              <form action="./controllers/changer_mdp.php" method="GET">
                 <div class="form-group">
                    <label for="exampleInputPassword1">Ancien mot de Passe :</label>
                    <input type="password" name="old_password" class="form-control" id="exampleInputPassword1" placeholder="******">
