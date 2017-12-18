@@ -130,36 +130,6 @@ function mdp_oublie($email) {
 	}
 }
 
-function changer_mdp ($old_password, $password, $new_password) {
-
-	if (empty($old_password) || empty($password) || empty($new_password)) {
-		echo '<br><div class="alert alert-danger" role="alert">Veuillez remplir tout les champs</div>';
-		include('./views/changer_mdp.php');
-	} else {
-		$bdd = connexion_bdd();
-		$req1 = $bdd->query('SELECT password, ID_user FROM user');
-		while ($result = $req1->fetch())
-		{
-			if ($result["password"] == $old_password && $password == $new_password && $result["ID_user"] == $_SESSION['ID_user']) {
-				$req = $bdd->prepare('UPDATE user SET password = :password WHERE ID_user = :ID_user ');
-				$req->execute(array(
-					'password' => $password,
-					'ID_user' => $_SESSION['ID_user']
-			));
-				$req->closeCursor();
-				 echo "<h3>Votre mot de passe a été modifié avec succès</h3>";
-				 $req1->closeCursor();
-			} else {
-				echo '<br><div class="alert alert-danger" role="alert">Mot de passe incorrect</div>';
-				include('./views/changer_mdp.php');
-				$req1->closeCursor();
-
-			}
-		}
-
-	}
-}
-
 function creer_groupe($nom, $iduser) {
 	require('config.php');
 	$bdd = connexion_bdd();
