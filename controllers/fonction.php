@@ -54,7 +54,7 @@ function changer_mdp ($old_password, $password, $new_password) {
 
 			}
 		}
-		
+
 	}
 }
 
@@ -156,7 +156,7 @@ function changer_mdp ($old_password, $password, $new_password) {
 
 			}
 		}
-		
+
 	}
 }
 
@@ -208,5 +208,160 @@ function supprimer_profil($nom) {
 	// $req->closeCursor();
 	// $req1->closeCursor();
 }
+
+//verifie et traite les envoi d'image
+
+function modif_img($type,$nom_produit){
+
+$erreur ="";
+$maxsize = "1048576";
+if($type == "logo")$nom = "../ressources/logo/".$_SESSION["ID_pfh"].".png";
+if($type == "produits")$nom = "../ressources/produit/".$nom_produit.".png";
+
+
+$extensions_valides = array( 'jpg' , 'jpeg' , 'gif' , 'png' );
+
+if ($_FILES['icone']['error'] == 0){
+
+  $extension_upload = strtolower(  substr(  strrchr($_FILES['icone']['name'], '.')  ,1)  );
+  if ( in_array($extension_upload,$extensions_valides)){echo "Extension correcte<br>";
+
+    if ($_FILES['icone']['size'] > $maxsize)
+      $erreur = "Le fichier est trop gros";
+
+      if (file_exists($nom)) {
+          echo "L'image existe.<br>";
+          unlink($nom);
+          $resultat = move_uploaded_file($_FILES['icone']['tmp_name'],$nom);
+          if($resultat) echo "Transfert réussi <br>";
+        } else {
+          echo "L'image n'existe pas.";
+          $resultat = move_uploaded_file($_FILES['icone']['tmp_name'],$nom);
+          if ($resultat) echo"Transfert réussi <br>";
+        }
+  }else{
+  $erreur = "Erreur lors du transfert";
+  }
+}
+
+echo($erreur);
+}
+
+
+////traite le formulaire "modifier produits"
+
+function save_produit(){
+  $nom = $_POST['nom'];
+  $ID_produit = $_POST['ID_produit'];
+  $ID_pfh = $_SESSION["ID_pfh"];
+  $prix = $_POST['prix'];
+  $quantite = $_POST['quantite'];
+  $bdd = connexion_bdd();
+
+  if(!empty($nom)){
+    $req = $bdd->prepare('UPDATE produit SET nom = :nom , img = :nom WHERE ID_pfh = :id AND ID_produit = :IDproduit');
+    $req->execute(array(
+      'id' => $ID_pfh,
+      'nom' => $nom,
+      'IDproduit' => $ID_produit
+    ));
+    echo("caca");
+    $req->closeCursor();
+  }else {
+    echo('il faut remplire le nom');
+  }
+
+  if(!empty($prix) && !empty($prix)){
+    $req = $bdd->prepare('UPDATE ligne_produit SET prix = :prix , quantite = :quantite WHERE ID_pfh = :id AND ID_produit = :IDproduit');
+    $req->execute(array(
+      'id' => $ID_pfh,
+      'prix' => $prix,
+      'quantite' => $quantite,
+      'IDproduit' => $ID_produit
+    ));
+    $req->closeCursor();
+  }else {
+    echo('il faut remplire le prix est la quantite');
+
+  }
+  echo('produit mise a jour');
+}
+
+//traite le formulaire "modifier description"
+
+function save_Descript(){
+	$descript = $_POST['descript'];
+	$bdd = connexion_bdd();
+	$id = $_SESSION["ID_pfh"];
+	$req = $bdd->prepare('UPDATE pfh SET description = :descript WHERE ID_pfh = :id');
+	$req->execute(array(
+	  'id' => $id,
+	  'descript' => $descript
+	));
+	$req->closeCursor();
+	echo('description mise a jour');
+
+}
+
+
+//traite le formulaire "modifier solde utilisateur"
+function save_Solde(){
+$old_Solde = $_POST['old_Solde'];
+$transaction = $_POST['transaction'];
+$id = $_POST["ID_user"];
+
+
+
+if ($_POST['checkbox'] == "+") {
+  $newSolde = $old_Solde + $transaction;
+
+}else{
+  $newSolde = $old_Solde - $transaction;
+}
+intval($newSolde);
+
+
+
+$bdd = connexion_bdd();
+$req = $bdd->prepare('UPDATE user SET solde = :newSolde  WHERE ID_user = :id');
+$req->execute(array(
+  'id' => $id,
+  ':newSolde' => $newSolde
+));
+echo($newSolde);
+$req->closeCursor();
+}
+
+//
+function catch_descript(){
+
+
+$bdd = connexion_bdd();
+$id = $_SESSION["ID_pfh"];
+$req = $bdd->prepare('SELECT description FROM pfh WHERE ID_pfh = :id');
+$req->execute(array(
+  'id' => $id
+));
+$donnees = $req->fetch();
+$req->closeCursor();
+
+return($donnees['description']);
+}
+
+//recup solde
+function catch_solde(){
+
+	$bdd = connexion_bdd();
+	$id = $_SESSION["ID_pfh"];
+	$req = $bdd->prepare('SELECT solde FROM pfh WHERE ID_pfh = :id');
+		$req->execute(array(
+	  'id' => $id
+	));
+	$donnees = $req->fetch();
+	$req->closeCursor();
+
+	return($donnees['solde']);
+}
+
 
 ?>
