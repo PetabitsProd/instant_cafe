@@ -83,6 +83,82 @@ function connect_user($email,$pass){
   $reponse->closeCursor(); // Termine le traitement de la requête
 	return($result);
 }
+function mdp_oublie($email) {
+	require('config.php');
+	$header="MIME-Version: 1.0\r\n";
+	$header.='From: "Instant Cafe"<buvette.intechinfo@gmail.com>'."\n";
+	$header.='Content-Type:text/html; charset="UTF-8"'."\n";
+	$header.='Content-Transfer-Encoding: 8bit';
+
+	if (empty($email)) {
+		echo '<br><div class="alert alert-danger" role="alert">Veuillez remplir le champs mail</div>';
+		include('./views/mdp_oublie.php');
+	} else {
+		$bdd = connexion_bdd();
+		$req1 = $bdd->query('SELECT email, prenom, password  FROM user');
+		while ($result = $req1->fetch())
+		{
+			if ($result["email"] == $email) {
+				$mdp = $result['password'];
+				$prenom = $result['prenom'];
+		  		$message='
+		  		<!DOCTYPE html>
+		  		<html>
+		  			<body>
+		  				<CENTER>
+		  					<h1>Vous avez oublié votre mot de passe ? !</h1>
+		  					<br>
+		  					<img src="http://imageshack.com/a/img923/6434/BGtfRL.png" width="150px" height="150px"/>
+		  					<br>
+		  					<br>
+
+		  					<h3>Bonjour '.$prenom.' !!</h3>
+		  					<em>Pour bien commencer la journée, pensez Instant Café !</em>
+		  					<br>
+		  					<h4>Ci-dessous, votre mot de passe lié à votre éspace Instant Café :</h4>
+		  					<br>
+		  					<h2 style="color: red;">'.$mdp.'</h2>
+		  				</CENTER>
+		  			</body>
+		  		</html>
+		  		';
+		  		mail($result['email'], "Votre mot de passe Instant Café", $message, $header);
+		  		header('Location: ../index.php');
+			}
+
+		}
+	}
+}
+
+function changer_mdp ($old_password, $password, $new_password) {
+
+	if (empty($old_password) || empty($password) || empty($new_password)) {
+		echo '<br><div class="alert alert-danger" role="alert">Veuillez remplir tout les champs</div>';
+		include('./views/changer_mdp.php');
+	} else {
+		$bdd = connexion_bdd();
+		$req1 = $bdd->query('SELECT password, ID_user FROM user');
+		while ($result = $req1->fetch())
+		{
+			if ($result["password"] == $old_password && $password == $new_password && $result["ID_user"] == $_SESSION['ID_user']) {
+				$req = $bdd->prepare('UPDATE user SET password = :password WHERE ID_user = :ID_user ');
+				$req->execute(array(
+					'password' => $password,
+					'ID_user' => $_SESSION['ID_user']
+			));
+				$req->closeCursor();
+				 echo "<h3>Votre mot de passe a été modifié avec succès</h3>";
+				 $req1->closeCursor();
+			} else {
+				echo '<br><div class="alert alert-danger" role="alert">Mot de passe incorrect</div>';
+				include('./views/changer_mdp.php');
+				$req1->closeCursor();
+
+			}
+		}
+		
+	}
+}
 
 function creer_groupe($nom, $iduser) {
 	require('config.php');
