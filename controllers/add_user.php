@@ -2,7 +2,7 @@
 
 if(isset($_FILES['add_user']))
 {
-     $dossier = '../ressources/';
+     $dossier = '../ressources/liste/';
      $fichier = basename($_FILES['add_user']['name']);
      if(move_uploaded_file($_FILES['add_user']['tmp_name'], $dossier . $fichier)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
      {
@@ -14,7 +14,7 @@ if(isset($_FILES['add_user']))
      }
 }
 
-$fichier = "../ressources/user_list.csv";
+$fichier = "../ressources/liste/user_list.csv";
 $fichiercsv = fopen($fichier,"r");
 
 $ligne = 0;
@@ -23,7 +23,7 @@ while(($user[$ligne] = fgetcsv($fichiercsv,1000,";")) !== FALSE)
   $ligne++;
 }
 
-require("config.php");
+require("../models/config.php");
 $bdd = connexion_bdd();
 
 $requette = $bdd->prepare('INSERT into user (nom , prenom , email , password, solde, semestre) VALUES (:nom, :prenom, :email, :password, :solde, :semestre)');
@@ -33,7 +33,7 @@ foreach ($user as $value) {
 		'nom' => $value['0'],
 		'prenom' => $value['1'],
 		'email' => $value['2'],
-		'password' => uniqid(),
+		'password' => "ok",
 		'solde' => 0,
     'semestre' => $value['3'],
 		));
@@ -41,8 +41,8 @@ foreach ($user as $value) {
 
 	echo "Tout va bien";
 
-  require('send_mail.php');
-  send_mail();
+  //require('send_mail.php');
+  //send_mail();
 
   header("Location: ../index.php?page=accueil");
 

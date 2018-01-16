@@ -1,4 +1,3 @@
-
-  <?php
-  require('./views/'.$page.'.php');
-  ?>
+<?php
+ require('./controllers/'.$page.'.php');
+?>

@@ -1,4 +1,43 @@
+.obj-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*body {
+    /*font-family: Montserrat;
+    background: url('./wallhaven-304074.jpg') no-repeat center center fixed #283d48;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}*/
+
 .form-area {
     padding: 10px 40px 60px;
     margin: 10px 0px 60px;
+}
+
+@media (min-width: 768px) {
+  .navbar-nav.navbar-center {
+    left: 50%;
+    position: absolute;
+    transform: translatex(-50%);
+  }
+
+.navbar-nav.navbar-right {
+    position: absolute;
+    right: 1%;
+  }
+}
+
+.container {
+  background-color: #F7F7F7;
+  width: 90%;
+  padding-bottom: 0.5%;
+  padding-top: 0.5%;
+  border-radius: 10px;
+}
+
+.inline form{
+  display: inline;
 }

@@ -1,15 +1,24 @@
 <?php
 	$bdd = connexion_bdd();
-	$req = $bdd->query('SELECT nom FROM pfh');
+	$req = $bdd->query('SELECT nom, description, id_pfh FROM pfh');
 	while ($result = $req->fetch()) {
 			$nom = $result["nom"];
-				// echo '<form action="./controllers/supprimer_profil.php" method="POST">';
-				// echo '<INPUT type="button" name="profil" value='.$nom.'>';
-				// echo '</form>';
-				// echo '<br>';
-			echo '<li class="nav-item">';
-			echo '<a class="nav-link" href="./controllers/supprimer_profil.php?profil='.$nom.'">'.$nom.'</a>';
-			echo '</li>';
+			$desc = $result["description"];
+			echo '<tr>
+							<th scope="row">'.$nom.'</th>
+								<td>'.$result["description"].'</td>
+								<td class="inline">
+								<!--form  action="./index.php?page=modifier_liste" method="POST">
+									<input type="hidden" name="id" value="'.$result["id_pfh"].'">
+									<button class="btn btn-primary" type="submit">Modifier</button>
+								</form-->
+								<form class="inline" action="./index.php?page=supprimer_liste" method="POST">
+									<input type="hidden" name="id_liste" value="'.$result["id_pfh"].'">
+									<button class="btn btn-danger" type="submit">Supprimer</button>
+								</form>
+								</td>
+						</tr>';
+			;
 	}
 	$req->closeCursor();
 ?>

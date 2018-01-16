@@ -6,7 +6,8 @@
 			$nom = $result["nom"];
 			$prenom = $result["prenom"];
 			$iduser = $result["ID_user"];
+			echo "<li>";
 			echo '<INPUT type="checkbox" name="iduser" value='.$iduser.'> '.$prenom.' '.$nom.'';
-			echo '<br>';
+			echo '</li>';
 	}
  ?>
