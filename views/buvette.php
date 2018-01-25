@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
+
 <div class="container">
   <h4>Voici les produits de la buvette :</h4>
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_pfh">
@@ -19,16 +21,17 @@
         </table>
 
     <h5>Créditer ou débiter un client :</h5>
-      <form method="post" action="./index.php?page=user">
+      <form method="POST" action="./index.php?page=user">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputNomd">Nom du client :</label>
-            <input type="text" name="client" class="form-control" id="inputNomd" placeholder="Nom du client"required>
+            <input type="text" name="client" class="inputNomd" id="inputNomd" placeholder="Nom du client"required>
             <button class="btn btn-primary" name="submit" value"submit" type="submit">Rechercher</button>
           </div>
         </div>
       </form>
 </div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="add_pfh" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -69,3 +72,12 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+$(function() {
+    $( ".inputNomd" ).autocomplete({
+        source: 'models/search.php',
+        minLength: 3
+    });
+});
+</script>

@@ -1,37 +1,57 @@
-<?php
-$bdd = connexion_bdd();
-$nom = $_POST["client"];
-$req = $bdd->prepare('SELECT * FROM user WHERE nom = :nom');
-$req->execute(array(
-  'nom' => $nom
+<?php 
+  $complet = explode(' ', $_POST["client"]);
+  $nom = $complet[0];
+  $prenom = $complet[1];
 
-));
 
-while ($donnees = $req->fetch())
-{
-  echo ('<div class="container">
-  <div class="jumbotron">
-    <div class="container">
-      <div class="row">
+  $bdd = connexion_bdd();
+  $req = $bdd->prepare('SELECT * FROM user WHERE nom = :nom AND prenom = :prenom');
+  $req->execute(array(
+    'nom' => $nom,
+    'prenom' => $prenom
+  ));
+
+  while ($result = $req->fetch())
+  { 
+    $id = $result["ID_user"];
+  }
+  $req->closeCursor();
+
+  $req = $bdd->prepare('SELECT * FROM user WHERE ID_user = :id');
+  $req->execute(array(
+    'id' => $id
+  ));
+  while ($result = $req->fetch())
+  { 
+    echo '<center>
+      <br>
+      <h4>Entrez le montant à créditer sur le compte</h4>
+      <br>
       <form method="post" action="./index.php?page=new_solde">
-        <div class="form-group">
-          <label for="usr">'.$donnees['nom'].' '.$donnees['prenom'].' solde actuel :'.$donnees['solde'].' </label>
-          <input type="text" value="0" class="form-control" name="transaction">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">€</span>
+          </div>
+          <input type="hidden" name="requete" value="+">
+          <input type="text" class="form-control" name="transaction" aria-label="Amount (to the nearest dollar)">
+          <div class="input-group-append">
+            <span class="input-group-text">.00</span>
+          </div>
         </div>
-        <div class="checkbox">
-          <label><input type="checkbox" name="checkbox" value="-">-</label>
-        </div>
-        <div class="checkbox">
-        <label><input type="checkbox" name="checkbox" value="+">+</label>
-        </div>
-        <input type="hidden" name="old_Solde" value="'.$donnees['solde'].'" />
-        <input type="hidden" name="ID_user" value="'.$donnees['ID_user'].'" />
-        <button type="submit" value="submit" class="btn btn-primary">Modifier</button>
+        <input type="hidden" name="ID_user" value="'.$result["ID_user"].'">
+        <input type="hidden" name="old_Solde" value="'.$result["solde"].'">
+        <input type="submit" name="valider" value="Valider">
       </form>
-    </div>
-  </div>
-  </div>
+    <br>
+    <br>
+    <form  method="POST" action="./index.php?page=achat_produit">
+        <input type="hidden" name="client" value="'.$nom.'">
+        <input type="submit" name="valider" value="Débiter un client">
+        <input type="hidden" name="ID_user" value="'.$result["ID_user"].'">
+        <input type="hidden" name="old_Solde" value="'.$result["solde"].'">
+      </div>
+    </form>
+    </center>';
 
-');
-}
+  }
 ?>

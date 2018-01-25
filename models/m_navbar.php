@@ -51,25 +51,33 @@ if (empty($_SESSION['prenom'])){
     $bouton_fermer = '';
   }
 
-  echo('<ul class="navbar-nav mr-right">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Solde: '.$_SESSION["solde"].'€</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              '.$_SESSION["prenom"].'
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="'.$adresse.'">'.$titre.'</a>
-              <a class="dropdown-item" href="?page=changer_mdp">Changer MDP</a>
-            <div class="dropdown-divider"></div>
-              <a href="./index.php?page=deconnexion" class="dropdown-item">Déconnexion</a>
-            </div>
-          </li>
-          '.$bouton_buvette.'
-          '.$bouton_fermer.'
-        </ul>
-      </div>
-    </nav>');
+  $bdd = connexion_bdd();
+  $req = $bdd->prepare('SELECT * FROM user WHERE ID_user = :id');
+  $req->execute(array(
+    'id' => $_SESSION["ID_user"]
+  ));
+  while ($result = $req->fetch())
+  { 
+    echo('<ul class="navbar-nav mr-right">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Solde: '.$result["solde"].'€</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                '.$_SESSION["prenom"].'
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="'.$adresse.'">'.$titre.'</a>
+                <a class="dropdown-item" href="?page=changer_mdp">Changer MDP</a>
+              <div class="dropdown-divider"></div>
+                <a href="./index.php?page=deconnexion" class="dropdown-item">Déconnexion</a>
+              </div>
+            </li>
+            '.$bouton_buvette.'
+            '.$bouton_fermer.'
+          </ul>
+        </div>
+      </nav>');
+  }
 }
  ?>
