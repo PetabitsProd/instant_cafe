@@ -1,19 +1,22 @@
 <?php
   $bdd = connexion_bdd();
-  $ID_user = $_POST["ID_user"];
-  $req = $bdd->prepare('SELECT * FROM user WHERE ID_user = :ID_user');
-  $req->execute(array(
-    'ID_user' => $ID_user
 
-  ));
-
-  while ($donnees = $req->fetch())
-  { 
     echo '
     <br>
-    <div class="form-group">ph
-      <center><h4>Le solde de '.$donnees['nom'].' '.$donnees['prenom'].' est de : '.$donnees['solde'].' €</h4></center>
-    </div>';
+    <center>
+    <form method="post" action="./index.php?page=new_solde">
+      <div class="form-row">
+            <div class="form-group col-md-11">
+              <label for="inputNomd">Nom du client :</label>
+              <br>
+              <input type="text" name="client" class="inputNomd" id="inputNomd" placeholder="Nom du client"required>
+              <br>
+              <br>
+            </div>
+      </div>
+    </center>
+    <br>';
+
     $req3 = $bdd->query('SELECT ID_pfh, actif, nom FROM pfh WHERE actif = "oui"');
     while ($result = $req3->fetch()) {
         $idpfh = $result["ID_pfh"];
@@ -36,17 +39,11 @@
                       </div>
                     </div>';
           } else {
-                  echo '<script>
-                    document.addEventListener("change", function(){
-                      var truc = document.getElementById("slider'.$result2['nom'].'").value;
-                      document.getElementById("'.$result2['nom'].'").innerHTML = truc;
-                    }); 
-                  </script>
+                  echo '
                   <div class="container">
                       <div class="jumbotron">
                           <div class="container">
                             <div class="row">
-                              <form method="post" action="./index.php?page=new_solde">
                                   <div class="card" style="max-width: 18rem;">
                                   <div class="card-header">
                                     <h4 class="card-title">'.$result2['nom'].'</h4>
@@ -59,14 +56,11 @@
                                   </div>
                             </div>
                             <br>
-                            <input type="range" name="quantite" id="slider'.$result2['nom'].'" value="0" min="0" max="5"  />
+                            <input type="number" name="quantite" value="0" min="0" max="10"  />
                             <input type="hidden" name="ID_produit" value="'.$result2['ID_produit'].'" />
-                            <span id="'.$result2['nom'].'">0</span>
                           </div>
                         </div>
                       </div>
-                      <input type="hidden" name="old_Solde" value="'.$donnees['solde'].'" />
-                      <input type="hidden" name="ID_user" value="'.$donnees['ID_user'].'" />
                       <input type="hidden" name="requete" value="-" />
                       <br>
                       <button type="submit" value="submit" class="btn btn-primary">Valider</button>
@@ -74,6 +68,4 @@
           }
         }
     }
-
-  }
 ?>

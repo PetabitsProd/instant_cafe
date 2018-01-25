@@ -44,8 +44,26 @@ if (empty($_SESSION['prenom'])){
   }
 
   if (isset($_SESSION['ID_pfh']) && $_SESSION['ID_pfh'] !== "") {
-    $bouton_buvette = '<li class="nav-item"><a class="btn btn-primary" href="./index.php?page=buvette">Buvette</a></li>';
-    $bouton_fermer = '<li class="nav-item"><a class="btn btn-danger" href="./index.php?page=fermer">Fermer Buvette</a></li>';
+    $bdd = connexion_bdd();
+    $req = $bdd->prepare('SELECT * FROM pfh WHERE ID_pfh = :id_pfh');
+    $req->execute(array(
+      'id_pfh' => $_SESSION['ID_pfh']
+    ));
+    while ($result = $req->fetch()) {
+      $nom_pfh = $result["nom"];
+    }
+    $req->closeCursor();
+
+    $bouton_buvette = '<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      '.$nom_pfh.'
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="./index.php?page=buvette">Gestion/Stats</a>
+      <a class="dropdown-item" href="./index.php?page=vente">Vente</a>
+    </div>
+  </div>';
+
   } else {
     $bouton_buvette = '';
     $bouton_fermer = '';
@@ -74,7 +92,6 @@ if (empty($_SESSION['prenom'])){
               </div>
             </li>
             '.$bouton_buvette.'
-            '.$bouton_fermer.'
           </ul>
         </div>
       </nav>');
