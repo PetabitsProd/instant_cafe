@@ -50,35 +50,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <form action="index.php?page=creer_pfh" method="POST">
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="inputNom">Nom :</label>
-              <input type="text" name="nom" class="form-control" id="inputNom" placeholder="Nom du projet"required>
-            </div>
-            <div class="form-group col-md-12">
-              <label for="inputlogo">Logo :</label><br>
-              <input type="file" name="img" id="inputlogo" >
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="inputdesc">Description :</label>
-              <textarea class="form-control" name="desc" id="inputdesc" rows="4" placeholder="Description du projet" required></textarea>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-12">
-                <label for="inputuser">Ajouter des étudiants :</label>
-                <ul>
-                  <?php require('./models/list_eleves.php') ?>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <button class="btn btn-lg btn-primary btn-block" name="submit" value"submit" type="submit">Valider</button>
-        </form>
-      </div>
+      <?php require('./models/liste_eleve_pfh.php') ?>
     </div>
   </div>
 </div>

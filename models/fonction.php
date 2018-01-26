@@ -84,6 +84,8 @@ function connect_user($email,$pass){
 }
 
 function creer_groupe($nom, $desc, $iduser) {
+
+
 	$bdd = connexion_bdd();
 	$req = $bdd->prepare('INSERT INTO pfh (nom,solde,description) VALUES(:nom, :solde, :description)');
 	$req->execute(array(

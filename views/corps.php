@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="./ressources/style.css">
 
     <link rel="icon" type="image/png" href="./ressources/logo.png" />
 
