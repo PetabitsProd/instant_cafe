@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" /> 
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
 
 <div class="container">
   <h4>Voici les produits de la buvette :</h4>
@@ -30,7 +30,14 @@
           </div>
         </div>
       </form>
+      <br>
+      <?php require('./models/historiqueVente.php'); ?>
+      <br>
+      <?php require('./models/ventesParBuvette.php'); ?>
+      <br>
+      <?php require('./models/ventesParJours.php'); ?>
 </div>
+
 
 
 <!-- Modal -->
